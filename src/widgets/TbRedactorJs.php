@@ -17,7 +17,7 @@
  *
  * @package booster.widgets.forms.inputs.wysiwyg
  */
-class TbRedactorJS extends CInputWidget
+class TbRedactorJs extends CInputWidget
 {
 	/**
 	 * @var array {@link http://imperavi.com/redactor/docs/ redactor options}.
