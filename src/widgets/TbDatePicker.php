@@ -108,10 +108,10 @@ class TbDatePicker extends TbBaseInputWidget {
 				if ($booster->enableCdn) {
 					Yii::app()->clientScript->registerScriptFile(
 						'//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js',
-						CClientScript::POS_HEAD
+						CClientScript::POS_END
 					);
 				} else {
-					$booster->cs->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
+					$booster->cs->registerScriptFile($booster->getAssetsUrl() . $filename);
 				}
 			}
 		}
