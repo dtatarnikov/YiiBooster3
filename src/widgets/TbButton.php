@@ -54,7 +54,7 @@ class TbButton extends TbWidget {
 	 * @var string the button callback types.
 	 * Valid values are 'link', 'button', 'submit', 'submitLink', 'reset', 'ajaxLink', 'ajaxButton' and 'ajaxSubmit'.
 	 */
-	public $buttonType = self::BUTTON_BUTTON;
+	public $buttonType = self::BUTTON_LINK;
 
 	/**
 	 * @var string the button size.
@@ -168,10 +168,6 @@ class TbButton extends TbWidget {
 
 		if ($this->isValidContext()) {
 			$classes[] = 'btn-' . $this->getContextClass();
-		}
-		
-		if($this->buttonType == self::BUTTON_LINK) {
-			$classes[] = 'btn-link';
 		}
 
 		$validSizes = array(

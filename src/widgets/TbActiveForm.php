@@ -709,7 +709,7 @@ class TbActiveForm extends CActiveForm {
 			$widgetOptions['labelOptions']['class'] = 'radio';
 		
 		if(isset($options['inline']) && $options['inline'])
-			$widgetOptions['labelOptions']['class'] = 'checkbox-inline';
+			$widgetOptions['labelOptions']['class'] = 'radio-inline';
 		
 		if (!isset($widgetOptions['template']))
 			$widgetOptions['template'] = '{beginLabel}{input}{labelTitle}{endLabel}';
