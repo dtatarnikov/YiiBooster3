@@ -200,7 +200,7 @@ abstract class TbBaseMenu extends CMenu {
 
 				if (!isset($item['url']) && !isset($item['items']) && $this->isVertical()) {
 					$item['header'] = true;
-					$classes[] = 'nav-header';
+					$classes[] = 'dropdown-header';
 				}
 
 				if (!empty($classes)) {

@@ -58,19 +58,12 @@ class TbDropdown extends TbBaseMenu {
 			$item['linkOptions'] = array();
 		}
 
-		// TODO: Bootstrap 3 does not support submenu 
-		// http://stackoverflow.com/questions/18023493/bootstrap-3-dropdown-sub-menu-missing
-		// we may use this to support it 
-		/* if (isset($item['items']) && !empty($item['items']) && empty($item['url'])) {
-			$item['url'] = '#';
-		} */
-
 		$item['linkOptions']['tabindex'] = -1;
 
 		if (isset($item['url'])) {
 			return CHtml::link($item['label'], $item['url'], $item['linkOptions']);
 		} else {
-			return CHtml::link($item['label'], '#', array());
+			return $item['label'];
 		}
 	}
 
