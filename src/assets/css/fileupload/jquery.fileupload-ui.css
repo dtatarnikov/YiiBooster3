@@ -35,6 +35,7 @@
 .files .progress {
   width: 200px;
 }
+.progress-animated .progress-bar,
 .progress-animated .bar {
   background: url(../../img/progressbar.gif) !important;
   filter: none;

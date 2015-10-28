@@ -129,7 +129,7 @@
                             !$.support.transition && 'progress-animated'
                         )
                         .attr('aria-valuenow', 100)
-                        .find('.bar').css(
+                        .children().first().css(
                             'width',
                             '100%'
                         );
@@ -243,7 +243,7 @@
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     data.context.find('.progress')
                         .attr('aria-valuenow', progress)
-                        .find('.bar').css(
+                        .children().first().css(
                             'width',
                             progress + '%'
                         );
@@ -264,7 +264,7 @@
                 globalProgressNode
                     .find('.progress')
                     .attr('aria-valuenow', progress)
-                    .find('.bar').css(
+                    .children().first().css(
                         'width',
                         progress + '%'
                     );
@@ -285,7 +285,7 @@
                     function () {
                         $(this).find('.progress')
                             .attr('aria-valuenow', '0')
-                            .find('.bar').css('width', '0%');
+                            .children().first().css('width', '0%');
                         $(this).find('.progress-extended').html('&nbsp;');
                         that._trigger('stopped', e);
                     }

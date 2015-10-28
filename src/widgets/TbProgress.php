@@ -124,11 +124,11 @@ class TbProgress extends TbWidget {
 	}
 	
 	protected function isValidContext($context = false) {
-		return in_array($this->context, [
-			self::CTX_SUCCESS, 
-			self::CTX_INFO, 
-			self::CTX_WARNING, 
+		return in_array($this->context, array(
+			self::CTX_SUCCESS,
+			self::CTX_INFO,
+			self::CTX_WARNING,
 			self::CTX_DANGER
-		]);
+		));
 	}
 }
