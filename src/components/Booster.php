@@ -464,15 +464,15 @@ class Booster extends CApplicationComponent {
 		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
-			$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2). '.js';
+			$locale = 'i18n' . DIRECTORY_SEPARATOR . substr(Yii::app()->language, 0, 2). '.js';
 			if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 				$jsFiles[] = $locale;
 			} else {
-				$locale = 'select2_locale_'. Yii::app()->language . '.js';
+				$locale = 'i18n' . DIRECTORY_SEPARATOR . Yii::app()->language . '.js';
 				if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 					$jsFiles[] = $locale;
 				}else{
-					$locale = 'select2_locale_'. substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
+					$locale = 'i18n' . DIRECTORY_SEPARATOR . substr(Yii::app()->language, 0, 2) . '-' . strtoupper(substr(Yii::app()->language, 3, 2)) . '.js';
 					if (@file_exists(Yii::getPathOfAlias('booster.assets.select2') . DIRECTORY_SEPARATOR . $locale )) {
 						$jsFiles[] = $locale;
 					}
@@ -480,10 +480,14 @@ class Booster extends CApplicationComponent {
 			}
 		}
 
+		$themePath = 'theme' . DIRECTORY_SEPARATOR . 'bootstrap';
+
 		return array('select2' => array(
 			'baseUrl' => $this->getAssetsUrl() . '/select2/',
 			'js' => $jsFiles,
-			'css' => array('select2.css', 'select2-bootstrap.css'),
+			'css' => $this->minify ?
+				array('select2.min.css', $themePath . DIRECTORY_SEPARATOR . 'select2-bootstrap.min.css') :
+				array('select2.css', $themePath . DIRECTORY_SEPARATOR . 'select2-bootstrap.css'),
 			'depends' => array('jquery'),
 		));
 	}
