@@ -461,7 +461,7 @@ class Booster extends CApplicationComponent {
 	 */
 	protected function createSelect2Package() {
 		
-		$jsFiles = array($this->minify ? 'select2.min.js' : 'select2.js');
+		$jsFiles = array($this->minify ? 'select2.full.min.js' : 'select2.full.js');
 
 		if (strpos(Yii::app()->language, 'en') !== 0) {
 			$locale = 'i18n' . DIRECTORY_SEPARATOR . substr(Yii::app()->language, 0, 2). '.js';

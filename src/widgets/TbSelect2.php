@@ -14,8 +14,8 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbSelect2 extends CInputWidget {
-	
+class TbSelect2 extends CInputWidget 
+{
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
@@ -34,20 +34,15 @@ class TbSelect2 extends CInputWidget {
 	public $events = array();
 
 	/**
-	 * @var string the default value.
-	 */
-	public $val;
-
-	/**
 	 * @var
 	 */
 	public $options;
 
-    /**
-     * @var bool
-     * @since 2.1.0
-     */
-    public $disabled = false;
+	/**
+	 * @var bool
+	 * @since 2.1.0
+	 */
+	public $disabled = false;
 
 	/**
 	 * Initializes the widget.
@@ -58,10 +53,10 @@ class TbSelect2 extends CInputWidget {
 		$this->normalizeOptions();
 		$this->normalizePlaceholder();
 
-        // disabled
-        if (!empty($this->htmlOptions['disabled'])) {
-            $this->disabled = true;
-        }
+		// disabled
+		if (!empty($this->htmlOptions['disabled'])) {
+			$this->disabled = true;
+		}
 	}
 
 	/**
@@ -75,7 +70,7 @@ class TbSelect2 extends CInputWidget {
 			if ($this->form) {
 				$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 			} else {
-				CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
+				echo CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 			}
 		} else {
 			CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions);
@@ -90,17 +85,20 @@ class TbSelect2 extends CInputWidget {
 	 * @param $id
 	 * @throws CException
 	 */
-	public function registerClientScript($id) {
-		
-        Booster::getBooster()->registerPackage('select2');
+	public function registerClientScript($id)
+	{
+		Booster::getBooster()->registerPackage('select2');
 
-		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
+		if(empty($this->options['language']) && empty($this->htmlOptions['lang']))
+			$this->options['language'] = Yii::app()->language;
 
-		if(!empty($this->val) || $this->val===0 || $this->val==='0') {
-			if(is_array($this->val)) {
-				$data = CJSON::encode($this->val);
+		$options = CJavaScript::encode($this->options);
+
+		if(!empty($this->value) || $this->value===0 || $this->value==='0') {
+			if(is_array($this->value)) {
+				$data = CJSON::encode($this->value);
 			} else {
-				$data = $this->val;
+				$data = $this->value;
 			}
 
 			//trigger maybe removed
@@ -109,9 +107,9 @@ class TbSelect2 extends CInputWidget {
 		else
 			$defValue = '';
 
-        if ($this->disabled) {
-            $defValue .= ".prop('disabled', true)";
-        }
+		if ($this->disabled) {
+			$defValue .= ".prop('disabled', true)";
+		}
 
 		ob_start();
 		echo "jQuery('#{$id}').select2({$options})";
