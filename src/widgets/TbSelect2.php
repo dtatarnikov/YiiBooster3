@@ -14,8 +14,8 @@
  *
  * @package booster.widgets.forms.inputs
  */
-class TbSelect2 extends CInputWidget 
-{
+class TbSelect2 extends CInputWidget {
+
 	/**
 	 * @var TbActiveForm when created via TbActiveForm.
 	 * This attribute is set to the form that renders the widget
@@ -140,5 +140,8 @@ class TbSelect2 extends CInputWidget
 	{
 		if (!empty($this->htmlOptions['placeholder']))
 			$this->options['placeholder'] = $this->htmlOptions['placeholder'];
+
+		if (!empty($this->options['placeholder']) && empty($this->htmlOptions['multiple']))
+			$this->data = array('' => '') + $this->data;
 	}
 }

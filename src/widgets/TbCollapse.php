@@ -4,9 +4,9 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @since 1.0.0
- * 
+ *
  */
 
 /**
@@ -14,12 +14,9 @@
  * @see <http://twitter.github.com/bootstrap/javascript.html#collapse>
  *
  * @package booster.widgets.grouping
- * @todo is this really a widget!?
  */
-class TbCollapse extends CWidget {
-	
-	const CONTAINER_PREFIX = 'yii_bootstrap_collapse_';
-
+class TbCollapse extends TbWidget
+{
 	/**
 	 * @var string the name of the collapse element. Defaults to 'div'.
 	 */
@@ -50,15 +47,13 @@ class TbCollapse extends CWidget {
 	 */
 	public $htmlOptions = array();
 
-	private static $_containerId = 0;
-
 	/**
 	 *### .init()
 	 *
 	 * Initializes the widget.
 	 */
-	public function init() {
-		
+	public function init()
+	{
 		if (!isset($this->htmlOptions['id'])) {
 			$this->htmlOptions['id'] = $this->getId();
 		}
@@ -72,11 +67,7 @@ class TbCollapse extends CWidget {
 		}
 
 		// NOTE: we depend on the htmlOptions being initialized to empty array already.
-		if (empty($this->htmlOptions['class'])) {
-			$this->htmlOptions['class'] = 'collapse';
-		} else {
-			$this->htmlOptions['class'] .= ' collapse';
-		}
+		self::addCssClass($this->htmlOptions, 'collapse');
 		echo CHtml::openTag($this->tagName, $this->htmlOptions);
 	}
 
@@ -85,8 +76,8 @@ class TbCollapse extends CWidget {
 	 *
 	 * Runs the widget.
 	 */
-	public function run() {
-		
+	public function run()
+	{
 		$id = $this->htmlOptions['id'];
 
 		echo CHtml::closeTag($this->tagName);
@@ -100,17 +91,5 @@ class TbCollapse extends CWidget {
 			$handler = CJavaScript::encode($handler);
 			$cs->registerScript(__CLASS__ . '#' . $id . '_' . $name, "jQuery('#{$id}').on('{$name}', {$handler});");
 		}
-	}
-
-	/**
-	 *### .getNextContainerId()
-	 *
-	 * Returns the next collapse container ID.
-	 * @return string the id
-	 * @static
-	 */
-	public static function getNextContainerId() {
-		
-		return self::CONTAINER_PREFIX . self::$_containerId++;
 	}
 }

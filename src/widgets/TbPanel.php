@@ -16,8 +16,8 @@ Yii::import('booster.widgets.TbWidget');
  *
  * @package booster.widgets.grouping
  */
-class TbPanel extends TbWidget {
-	
+class TbPanel extends TbWidget
+{
 	/**
 	 * @var mixed
 	 * Panel title
@@ -38,7 +38,10 @@ class TbPanel extends TbWidget {
 	 * optional, the content of this attribute is echoed as the panel content
 	 */
 	public $content = '';
-	
+
+	/**
+	 * @var bool if true than content will be wrapped by 'panel-body' class
+	 */
 	public $padContent = true;
 
 	/**
@@ -86,10 +89,10 @@ class TbPanel extends TbWidget {
 	 *
 	 * Widget initialization
 	 */
-	public function init() {
-		
+	public function init()
+	{
 		$this->addCssClass($this->htmlOptions, 'panel');
-		
+
 		if($this->isValidContext())
 			self::addCssClass($this->htmlOptions, 'panel-'.$this->getContextClass());
 
@@ -100,11 +103,7 @@ class TbPanel extends TbWidget {
 			$this->contentHtmlOptions['id'] = $this->getId();
 		}
 
-		if (isset($this->headerHtmlOptions['class'])) {
-			$this->headerHtmlOptions['class'] = 'panel-heading ' . $this->headerHtmlOptions['class'];
-		} else {
-			$this->headerHtmlOptions['class'] = 'panel-heading';
-		}
+		self::addCssClass($this->headerHtmlOptions, 'panel-heading');
 
 		echo CHtml::openTag('div', $this->htmlOptions);
 
@@ -117,8 +116,8 @@ class TbPanel extends TbWidget {
 	 *
 	 * Widget run - used for closing procedures
 	 */
-	public function run() {
-		
+	public function run()
+	{
 		$this->renderContentEnd();
 		echo CHtml::closeTag('div') . "\n";
 	}
@@ -128,8 +127,8 @@ class TbPanel extends TbWidget {
 	 *
 	 * Renders the header of the panel with the header control (button to show/hide the panel)
 	 */
-	public function renderHeader() {
-		
+	public function renderHeader()
+	{
 		if ($this->title !== false) {
 			echo CHtml::openTag('div', $this->headerHtmlOptions);
 			if ($this->title) {
@@ -141,7 +140,7 @@ class TbPanel extends TbWidget {
 					else
 						$this->title = '<i class="' . $this->headerIcon . '"></i> ' . $this->title;
 				}
-				
+
 				$this->renderButtons();
 				echo $this->title;
 			}
@@ -155,17 +154,17 @@ class TbPanel extends TbWidget {
 	 *
 	 * Renders a header buttons to display the configured actions
 	 */
-	public function renderButtons() {
-		
+	public function renderButtons()
+	{
 		if (empty($this->headerButtons))
 			return;
 
 		echo '<div class="pull-right">';
 
 		if (!empty($this->headerButtons) && is_array($this->headerButtons)) {
-			
+
 			foreach ($this->headerButtons as $options) {
-				
+
 				$class = $options['class'];
 				unset($options['class']);
 
@@ -176,7 +175,7 @@ class TbPanel extends TbWidget {
 					$options['htmlOptions'] = array();
 
 				self::addCssClass($options['htmlOptions'], 'pull-right');
-				
+
 				$this->controller->widget($class, $options);
 			}
 		}
@@ -188,8 +187,8 @@ class TbPanel extends TbWidget {
 	 *
 	 * Renders the opening of the content element and the optional content
 	 */
-	public function renderContentBegin() {
-		
+	public function renderContentBegin()
+	{
 		echo CHtml::openTag('div', $this->contentHtmlOptions);
 		if (!empty($this->content)) {
 			echo $this->content;
@@ -201,8 +200,8 @@ class TbPanel extends TbWidget {
 	 *
 	 * Closes the content element
 	 */
-	public function renderContentEnd() {
-		
+	public function renderContentEnd()
+	{
 		echo CHtml::closeTag('div');
 	}
 
