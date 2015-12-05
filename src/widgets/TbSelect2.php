@@ -68,12 +68,12 @@ class TbSelect2 extends CInputWidget {
 
 		if ($this->hasModel()) {
 			if ($this->form) {
-				$this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
+				echo $this->form->dropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 			} else {
 				echo CHtml::activeDropDownList($this->model, $this->attribute, $this->data, $this->htmlOptions);
 			}
 		} else {
-			CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions);
+			echo CHtml::dropDownList($name, $this->value, $this->data, $this->htmlOptions);
 		}
 
 		$this->registerClientScript($id);
@@ -116,11 +116,12 @@ class TbSelect2 extends CInputWidget {
 		foreach ($this->events as $event => $handler) {
 			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 		}
+		echo ';';
 		if(!empty($defValue)) {
-			echo "jQuery('#{$id}')".$defValue;
+			echo "jQuery('#{$id}')".$defValue.';';
 		}
 
-		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean() . ';');
+		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean());
 	}
 
 	private function normalizeData()
