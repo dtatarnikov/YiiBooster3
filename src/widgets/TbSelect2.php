@@ -45,6 +45,13 @@ class TbSelect2 extends CInputWidget {
 	public $disabled = false;
 
 	/**
+	 * @var array this options can be used if data is not specified
+	 * mostly with ajax requests. Single selection: [id, text]; multiple selection: [[id, text]].
+	 * Default to empty array.
+	 */
+	public $initialData = array();
+
+	/**
 	 * Initializes the widget.
 	 */
 	public function init()
@@ -92,17 +99,15 @@ class TbSelect2 extends CInputWidget {
 		if(empty($this->options['language']) && empty($this->htmlOptions['lang']))
 			$this->options['language'] = Yii::app()->language;
 
-		$options = CJavaScript::encode($this->options);
-
 		if(!empty($this->value) || $this->value===0 || $this->value==='0') {
 			if(is_array($this->value)) {
-				$data = CJSON::encode($this->value);
+				$value = CJSON::encode($this->value);
 			} else {
-				$data = $this->value;
+				$value = '"'.$this->value.'"';
 			}
 
 			//trigger maybe removed
-			$defValue = ".val($data).trigger('change')";
+			$defValue = ".val($value).trigger('change')";
 		}
 		else
 			$defValue = '';
@@ -111,14 +116,34 @@ class TbSelect2 extends CInputWidget {
 			$defValue .= ".prop('disabled', true)";
 		}
 
+		$options = CJavaScript::encode($this->options);
+
 		ob_start();
-		echo "jQuery('#{$id}').select2({$options})";
-		foreach ($this->events as $event => $handler) {
-			echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
-		}
-		echo ';';
+		echo "jQuery('#{$id}').select2({$options});";
 		if(!empty($defValue)) {
 			echo "jQuery('#{$id}')".$defValue.';';
+		}
+		if(count($this->events) > 0) {
+			echo "jQuery('#{$id}')";
+			foreach ($this->events as $event => $handler) {
+				echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
+			}
+			echo ';';
+		}
+		if(!empty($this->initialData)) {
+			$data = CJavaScript::encode($this->initialData);
+			$js = <<<JS
+var data = {$data};
+if(!$.isArray(data)) {
+	data = [data];
+}
+$.each(data, function(index, value){
+	var option = $("<option selected></option>").val(value.id).data('data',value);
+	$('#{$id}').append(option);
+});
+$('#{$id}').trigger('change');
+JS;
+			echo $js;
 		}
 
 		Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $this->getId(), ob_get_clean());
