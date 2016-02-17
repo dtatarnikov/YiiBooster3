@@ -119,12 +119,12 @@ class TbSelect2 extends CInputWidget {
 		$options = CJavaScript::encode($this->options);
 
 		ob_start();
-		echo "jQuery('#{$id}').select2({$options});";
+		echo "jQuery('select#{$id}').select2({$options});";
 		if(!empty($defValue)) {
-			echo "jQuery('#{$id}')".$defValue.';';
+			echo "jQuery('select#{$id}')".$defValue.';';
 		}
 		if(count($this->events) > 0) {
-			echo "jQuery('#{$id}')";
+			echo "jQuery('select#{$id}')";
 			foreach ($this->events as $event => $handler) {
 				echo ".on('{$event}', " . CJavaScript::encode($handler) . ")";
 			}
@@ -139,9 +139,9 @@ if(!$.isArray(data)) {
 }
 $.each(data, function(index, value){
 	var option = $("<option selected></option>").val(value.id).data('data',value);
-	$('#{$id}').append(option);
+	$('select#{$id}').append(option);
 });
-$('#{$id}').trigger('change');
+$('select#{$id}').trigger('change');
 JS;
 			echo $js;
 		}
